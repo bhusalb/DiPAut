@@ -13,10 +13,6 @@
   <a href="#writing_your_own_algorithm"><b>Writing Your Own Algorithm</b></a>
 </div>
 
-## Download
-For temporary use, you can access the zipped version of this GitHub repository. You can do this by choosing repo.zip from the sidebar, then downloading the file.
-
-Once downloaded, please extract the contents of the zip file. Follow the installation commands found in this repository to set up the necessary files.
 ## Installation
 
 ### Install Via Docker
