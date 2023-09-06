@@ -1,0 +1,4 @@
+(q1,1/4,0): x:= insample; output insample; goto q2
+(q2,1/2,0): if (insample <= x) then output otop; goto q3
+(q3,1/2,0): if (insample <= x) then output obot; goto q4
+(q4,1/2,0): if (insample <= x) then output obot; goto q3

@@ -1,0 +1,6 @@
+(q1:non-input,1/4,0): u:= insample; output obot; goto q2
+(q2:non-input,1/4,1): v:= insample; output obot; goto q3
+(q3:non-input,1/4,2): w:= insample; output obot; goto q4
+(q4,1/4,0): if (insample >= u && insample < v) then output ocontinue; goto q4 elseif (insample < u) then output obot; goto q7 elseif (insample > v && insample < w) then output otop; goto q5 elseif (insample >v && insample > w) then output otop; goto q7
+(q5:non-input,1/4,1): v:= insample; output obot; goto q6
+(q6,1/4,0): if (insample >= v && insample < w) then output ocontinue; goto q6 elseif (insample < v) then output obot; goto q7  elseif (insample > w) then output otop; goto q7

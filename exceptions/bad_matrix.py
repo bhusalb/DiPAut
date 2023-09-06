@@ -1,0 +1,2 @@
+class BadMatrixException(Exception):
+    pass

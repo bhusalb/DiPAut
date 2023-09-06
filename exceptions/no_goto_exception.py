@@ -1,0 +1,2 @@
+class NoGotoException(Exception):
+    pass

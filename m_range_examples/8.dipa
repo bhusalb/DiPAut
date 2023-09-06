@@ -1,0 +1,24 @@
+(q1:non-input,1/32,0): l1:= insample; output obot; goto q2
+(q2:non-input,1/32,1): r1:= insample; output obot; goto q3
+(q3:non-input,1/32,0): l2:= insample; output obot; goto q4
+(q4:non-input,1/32,1): r2:= insample; output obot; goto q5
+(q5:non-input,1/32,0): l3:= insample; output obot; goto q6
+(q6:non-input,1/32,1): r3:= insample; output obot; goto q7
+(q7:non-input,1/32,0): l4:= insample; output obot; goto q8
+(q8:non-input,1/32,1): r4:= insample; output obot; goto q9
+(q9:non-input,1/32,0): l5:= insample; output obot; goto q10
+(q10:non-input,1/32,1): r5:= insample; output obot; goto q11
+(q11:non-input,1/32,0): l6:= insample; output obot; goto q12
+(q12:non-input,1/32,1): r6:= insample; output obot; goto q13
+(q13:non-input,1/32,0): l7:= insample; output obot; goto q14
+(q14:non-input,1/32,1): r7:= insample; output obot; goto q15
+(q15:non-input,1/32,0): l8:= insample; output obot; goto q16
+(q16:non-input,1/32,1): r8:= insample; output obot; goto q17
+(q17,1/4,0): if (insample >= l1 && insample < r1) then output ocontinue; goto q18 elseif (insample >= l1 && insample > r1) then output otop; goto q25 elseif (insample < l1 && insample < r1) then output obot; goto q25
+(q18,1/4,0): if (insample >= l2 && insample < r2) then output ocontinue; goto q19 elseif (insample >= l2 && insample > r2) then output otop; goto q25 elseif (insample < l2 && insample < r2) then output obot; goto q25
+(q19,1/4,0): if (insample >= l3 && insample < r3) then output ocontinue; goto q20 elseif (insample >= l3 && insample > r3) then output otop; goto q25 elseif (insample < l3 && insample < r3) then output obot; goto q25
+(q20,1/4,0): if (insample >= l4 && insample < r4) then output ocontinue; goto q21 elseif (insample >= l4 && insample > r4) then output otop; goto q25 elseif (insample < l4 && insample < r4) then output obot; goto q25
+(q21,1/4,0): if (insample >= l5 && insample < r5) then output ocontinue; goto q22 elseif (insample >= l5 && insample > r5) then output otop; goto q25 elseif (insample < l5 && insample < r5) then output obot; goto q25
+(q22,1/4,0): if (insample >= l6 && insample < r6) then output ocontinue; goto q23 elseif (insample >= l6 && insample > r6) then output otop; goto q25 elseif (insample < l6 && insample < r6) then output obot; goto q25
+(q23,1/4,0): if (insample >= l7 && insample < r7) then output ocontinue; goto q24 elseif (insample >= l7 && insample > r7) then output otop; goto q25 elseif (insample < l7 && insample < r7) then output obot; goto q25
+(q24,1/4,0): if (insample >= l8 && insample < r8) then output ocontinue; goto q17 elseif (insample >= l8 && insample > r8) then output otop; goto q25 elseif (insample < l8 && insample < r8) then output obot; goto q25

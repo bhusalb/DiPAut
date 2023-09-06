@@ -1,0 +1,2 @@
+class UnableToProcess(Exception):
+    pass

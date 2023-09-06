@@ -1,0 +1,2 @@
+(q1:non-input,1/4,0): x:= insample; output oinput; goto q2
+(q2:non-input,1/2,0): if (insample > x) then output otop; goto q2 elseif (insample < x) then  output obot; goto q3

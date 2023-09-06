@@ -1,0 +1,14 @@
+.idea
+venv
+__pycache__
+parser.out
+parsetab.py
+core/parser.out
+core/parsetab.py
+.DS_Store
+main_branch_output.txt
+optimization_branch_output.txt
+o.txt
+n_box_op.txt
+final_branch_op.txt
+last_result.txt

@@ -1,0 +1,2 @@
+class DuplicateStateException(Exception):
+    pass

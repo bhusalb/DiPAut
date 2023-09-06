@@ -1,0 +1,3 @@
+(q1,1/8,0): min:= insample,max:= insample; output oread; goto q2
+(q2,1/8,0): if (insample > max && insample > min) then max:= insample; output oread; goto q3 elseif (insample <= max && insample >= min) then output oread; goto q3 elseif (insample < max && insample < min) then min:= insample; output oread; goto q3
+(q3,1/4,0): if (insample < max && insample < min) then output obot; goto q4 elseif (insample > max && insample > min) then output otop; goto q4 elseif (insample <= max && insample >= min) then output ocontinue; goto q3

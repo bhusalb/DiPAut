@@ -1,0 +1,6 @@
+(q1:non-input,1/8,0): l1:= insample; output obot; goto q2
+(q2:non-input,1/8,1): r1:= insample; output obot; goto q3
+(q3:non-input,1/8,0): l2:= insample; output obot; goto q4
+(q4:non-input,1/8,1): r2:= insample; output obot; goto q5
+(q5,1/4,0): if (insample >= l1 && insample < r1) then output ocontinue; goto q6 elseif (insample >= l1 && insample > r1) then output otop; goto q7 elseif (insample < l1 && insample < r1) then output obot; goto q7
+(q6,1/4,0): if (insample >= l2 && insample < r2) then output ocontinue; goto q5 elseif (insample >= l2 && insample > r2) then output otop; goto q7 elseif (insample < l2 && insample < r2) then output obot; goto q7

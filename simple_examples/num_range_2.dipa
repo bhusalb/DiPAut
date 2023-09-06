@@ -1,0 +1,3 @@
+(q1:non-input,1/4,0): l1:= insample; output obot; goto q2
+(q2:non-input,1/4,1): r1:= insample; output obot; goto q3
+(q3,1/4,0, 1/4,0): if (insample >= l1 && insample < r1) then output ocontinue; goto q3 elseif (insample >= l1 && insample > r1) then output insampleprime; goto q4

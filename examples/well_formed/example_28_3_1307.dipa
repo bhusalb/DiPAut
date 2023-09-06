@@ -1,0 +1,4 @@
+(q1,1/2,0): x1:= insample; output obot; goto q2
+(q2,1/2,10):x2:= insample; output obot; goto q3
+(q3,1/6,0): if (insample < x2 && insample >= x1) then output obot; goto q4
+(q4,1/6,0): if (insample < x1) then x2:= insample; output obot; goto q3

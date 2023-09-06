@@ -1,0 +1,2 @@
+class VariableUndefinedException(Exception):
+    pass
