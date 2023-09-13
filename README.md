@@ -1,6 +1,9 @@
 <h1 align="center">
   DiPAut
 </h1>
+<p align="center">
+<a href="https://doi.org/10.5281/zenodo.8332275"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.8332275.svg" alt="DOI"></a>
+</p>
 
 <p align="center">
   DiPAut is a software tool built in Python that checks the differential privacy of online randomized algorithms. It computes a bound "d" for the weight of the automaton, ensuring differential privacy for all privacy budgets "ε".
