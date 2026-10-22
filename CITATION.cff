@@ -1,0 +1,35 @@
+cff-version: 1.2.0
+message: "If you use DiPAut, please cite the paper below."
+title: "DiPAut: deciding differential privacy of online algorithms (DiP automata)"
+type: software
+repository-code: "https://github.com/bhusalb/DiPAut"
+authors:
+  - family-names: Bhusal
+    given-names: Bishnu
+    orcid: "https://orcid.org/0000-0001-7522-5878"
+  - family-names: Chadha
+    given-names: Rohit
+  - family-names: Sistla
+    given-names: A. Prasad
+  - family-names: Viswanathan
+    given-names: Mahesh
+preferred-citation:
+  type: conference-paper
+  title: "Deciding Differential Privacy of Online Algorithms with Multiple Variables"
+  authors:
+    - family-names: Chadha
+      given-names: Rohit
+    - family-names: Sistla
+      given-names: A. Prasad
+    - family-names: Viswanathan
+      given-names: Mahesh
+    - family-names: Bhusal
+      given-names: Bishnu
+  collection-title: "Proceedings of the 2023 ACM SIGSAC Conference on Computer and Communications Security (CCS '23)"
+  publisher:
+    name: "Association for Computing Machinery"
+  start: 1761
+  end: 1775
+  year: 2023
+  doi: "10.1145/3576915.3623170"
+  url: "https://arxiv.org/abs/2309.06615"
