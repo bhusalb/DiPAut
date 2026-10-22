@@ -174,6 +174,23 @@ python3 scripts/plot_generator.py
 ```
 This script will process the CSV files in the results/ folder and generate corresponding plots, which will be stored in the plots/ folder.
 
+## Paper
 
+*Deciding Differential Privacy of Online Algorithms with Multiple Variables*, ACM CCS 2023. [DOI](https://doi.org/10.1145/3576915.3623170) · [arXiv](https://arxiv.org/abs/2309.06615) · [Paper page](https://bishnubhusal.com.np/publications/chadha2023ccs/)
 
+## Citation
 
+If you use this code in your research, please cite:
+
+```bibtex
+@inproceedings{chadha2023deciding,
+  title     = {Deciding Differential Privacy of Online Algorithms with Multiple Variables},
+  author    = {Chadha, Rohit and Sistla, A. Prasad and Viswanathan, Mahesh and Bhusal, Bishnu},
+  booktitle = {Proceedings of the 2023 ACM SIGSAC Conference on Computer and Communications Security},
+  series    = {CCS '23},
+  pages     = {1761--1775},
+  year      = {2023},
+  publisher = {Association for Computing Machinery},
+  doi       = {10.1145/3576915.3623170}
+}
+```
