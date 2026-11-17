@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 from igraph import *
 
 from builders import bisimulation_builder
@@ -17,51 +19,40 @@ def calculate_weight_for_edge(old_graph, edge):
 
 
 def calculate_weight_for_component_node(old_graph, graph, component):
-    node_wt = dict()
-    edges = graph.es.select(_within=component)
+    # For every variable: the largest charge (2d for an input state, d for a non-input
+    # state) among the assignments inside the component whose value is read later.
+    node_wt = defaultdict(int)
 
-    dx1 = defaultdict(list)
-    dx2 = defaultdict(list)
-    var_set = set()
+    for edge in graph.es.select(_within=component):
+        if not edge['assignment']:
+            continue
 
-    for edge in edges:
         old_source_vertex = old_graph.vs[edge.source_vertex['initial_graph_index']]
-        for var in edge['assignment']:
-            var_set.add(var)
-            if old_source_vertex['non-input']:
-                dx2[var].append(old_source_vertex['d'])
-            else:
-                dx1[var].append(2 * old_source_vertex['d'])
+        charge = old_source_vertex['d'] if old_source_vertex['non-input'] else 2 * old_source_vertex['d']
 
-    for var in var_set:
-        if is_there_path_from_assignment_to_lt_or_gt(graph, var, component[0]):
-            node_wt[var] = max(max(dx1[var]) if var in dx1 else 0,
-                               max(dx2[var]) if var in dx2 else 0)
-        else:
-            node_wt[var] = 0
+        for var in edge['assignment']:
+            if charge > node_wt[var] and is_there_path_from_assignment_to_lt_or_gt(graph, var, edge.target):
+                node_wt[var] = charge
 
     return sum(node_wt.values())
 
 
 def is_there_path_from_assignment_to_lt_or_gt(graph, var, starting_index):
+    # Is some transition whose guard mentions `var` reachable from `starting_index`
+    # (the target of the assigning transition) without another assignment of `var`?
     visited = [False] * (len(graph.vs))
-    s = starting_index
-    queue = [s]
-    visited[s] = True
+    queue = [starting_index]
+    visited[starting_index] = True
     while queue:
-
         s = queue.pop(0)
 
         for edge in graph.vs[s].out_edges():
-            if not visited[edge.target]:
+            if var in edge['lt'] or var in edge['gt']:
+                return True
 
-                if var in edge['lt'] or var in edge['gt']:
-                    return True
-
-                if var not in edge['assignment']:
-                    queue.append(edge.target)
-
+            if var not in edge['assignment'] and not visited[edge.target]:
                 visited[edge.target] = True
+                queue.append(edge.target)
 
     return False
 
@@ -90,43 +81,28 @@ def component_graph_builder(old_graph, graph):
     return component_graph, new_vertex_map
 
 
-def calculate_maximum_weight_path(graph):
-    _visited = [False] * len(graph.vs)
+def calculate_maximum_weight_path(graph, start=0):
+    # Maximum weight of a path from `start` in the component graph (a DAG),
+    # summing vertex and edge weights.
+    best = [None] * len(graph.vs)
+    best[start] = graph.vs[start]['weight']
 
-    graph.vs['max_weight_upto_here'] = 0
-    graph.vs[0]['max_weight_upto_here'] = graph.vs[0]['weight']
+    for source in graph.topological_sorting(mode='out'):
+        if best[source] is None:
+            continue  # not reachable from the start component
 
-    _visited[0] = True
-
-    queue = [[0, _visited]]
-
-    while queue:
-        source, visited = queue.pop(0)
-        source_vertex = graph.vs[source]
-
-        max_weight_upto_source = source_vertex['max_weight_upto_here']
-
-        for out_edge in source_vertex.out_edges():
-            target_vertex = out_edge.target_vertex
+        for out_edge in graph.vs[source].out_edges():
             target = out_edge.target
+            candidate = best[source] + out_edge['weight'] + graph.vs[target]['weight']
+            if best[target] is None or best[target] < candidate:
+                best[target] = candidate
 
-            if not visited[target]:
-
-                visited[target] = True
-
-                queue.append([target, visited.copy()])
-
-                new_max_weight_upto_here = max_weight_upto_source + out_edge['weight'] + out_edge.target_vertex[
-                    'weight']
-
-                if target_vertex['max_weight_upto_here'] < new_max_weight_upto_here:
-                    target_vertex['max_weight_upto_here'] = new_max_weight_upto_here
-
-    return max(graph.vs['max_weight_upto_here'])
+    return max(weight for weight in best if weight is not None)
 
 
 def compute_weight(graph, aug_graph):
     bisimulation_graph = bisimulation_builder.build(graph, aug_graph)
     component_graph, vertex_map = component_graph_builder(graph, bisimulation_graph)
 
-    return calculate_maximum_weight_path(component_graph)
+    # vertex 0 of the quotient is the class of the initial state
+    return calculate_maximum_weight_path(component_graph, vertex_map[0])

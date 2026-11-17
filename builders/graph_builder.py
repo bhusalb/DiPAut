@@ -98,9 +98,7 @@ def remove_unreachable_vertices(graph):
                 queue.append(target_vertex)
                 visited[target_vertex] = True
 
-    for vertex, reachable in enumerate(visited):
-        if not reachable:
-            graph.delete_vertices(vertex)
+    graph.delete_vertices([vertex for vertex, reachable in enumerate(visited) if not reachable])
 
 
 def assign_attributes_to_edges(graph, output_list, assignment_list, lt_list, gt_list):

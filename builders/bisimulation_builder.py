@@ -4,26 +4,24 @@ from igraph import *
 from collections import defaultdict
 
 
+def get_unmergeable_states(graph):
+    # States of the original automaton whose copies must not be merged: those in a
+    # strongly connected component that contains an assignment transition.
+    # Graph.clusters() was renamed to connected_components() in python-igraph 0.10.
+    strong_components = getattr(graph, 'connected_components', None) or graph.clusters
+    membership = strong_components(mode='strong').membership
+    bad_components = {membership[edge.source] for edge in graph.es
+                      if edge['assignment'] and membership[edge.source] == membership[edge.target]}
+    return {vertex.index for vertex in graph.vs if membership[vertex.index] in bad_components}
+
+
 def get_initially_related(graph, aug_graph):
-    # combinations = list(itertools.combinations_with_replacement(aug_graph.vs.indices, 2))
-    # initially_related_dict = dict()
-    #
-    # for combination in combinations:
-    #     _q1 = aug_graph.vs[combination[0]]
-    #     _q2 = aug_graph.vs[combination[-1]]
-    #     # q1 = graph.vs[_q1['initial_graph_index']]
-    #     # q2 = graph.vs[_q2['initial_graph_index']]
-    #     #
-    #     # if q1['non-input'] == q2['non-input'] and \
-    #     #         q1['d'] == q2['d'] and q1['dprime'] == q2['dprime'] and \
-    #     #         q1['mean'] == q2['mean'] and q1['meanprime'] == q2['meanprime']:
-    #     #     initially_related_dict[(_q1.index, _q2.index)] = (_q1.index, _q2.index)
-    #
-    #     if _q1['initial_graph_index'] == _q2['initial_graph_index']:
-    #         initially_related_dict[(_q1.index, _q2.index)] = (_q1.index, _q2.index)
+    unmergeable = get_unmergeable_states(graph)
 
     return {(_q1.index, _q2.index): (_q1.index, _q2.index) for _q1 in aug_graph.vs for _q2 in aug_graph.vs if
-            _q1['initial_graph_index'] == _q2['initial_graph_index']}
+            _q1.index == _q2.index or (
+                    _q1['initial_graph_index'] == _q2['initial_graph_index'] and
+                    _q1['initial_graph_index'] not in unmergeable)}
 
 
 def check_if_each_transition_match_with_a_transition(aug_graph, _q1, _q2, q1_q2_related_map):

@@ -47,9 +47,6 @@ def is_there_path_to_condition(aug_graph, vertex, var1, var2):
 
 
 def get_sm_vars(module, t, vars):
-    if t.index in sm_vars_memo:
-        return sm_vars_memo[t.index]
-
     sm_vars = []
     eq_matrix = t.source_vertex['eq']
     for xj in t['lt']:
@@ -57,23 +54,16 @@ def get_sm_vars(module, t, vars):
             if (xi, xj) in eq_matrix:
                 sm_vars.append(xi)
 
-    sm_vars_memo[t.index] = sm_vars
-
     return sm_vars
 
 
 def get_lg_vars(module, t, vars):
-    if t.index in lg_vars_memo[module]:
-        return lg_vars_memo[module][t.index]
-
     lg_vars = []
     eq_matrix = t.source_vertex['eq']
     for xj in t['gt']:
         for xi in vars:
             if (xj, xi) in eq_matrix:
                 lg_vars.append(xi)
-
-    lg_vars_memo[module][t.index] = lg_vars
 
     return lg_vars
 
