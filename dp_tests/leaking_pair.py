@@ -76,19 +76,20 @@ def perform_test(kwargs):
     l1, l2, l3, l4 = set(), set(), set(), set()
     src_l1, src_l2, src_l3, src_l4 = set(), set(), set(), set()
     target_l1, target_l2, target_l3, target_l4 = set(), set(), set(), set()
-    l1_target_index_map, l2_target_index_map, l3_target_index_map, l4_target_index_map = (defaultdict(list),) * 4
+    l1_target_index_map, l2_target_index_map, l3_target_index_map, l4_target_index_map = (
+        defaultdict(list), defaultdict(list), defaultdict(list), defaultdict(list))
     target_index_map = dict()
     source_index_map = dict()
     for t in scc_transitions:
         target_index_map[t.index] = t.target
         source_index_map[t.index] = t.source
-        if t.source_vertex['b'] == 1 and 'V1' in get_sm_vars(__name__, t, variables):
+        if t.source_vertex['b'] in (1, 2) and 'V1' in get_sm_vars(__name__, t, variables):
             l1.add(t.index)
             src_l1.add(t.source)
             target_l1.add(t.target)
             l1_target_index_map[t.target].append(t.index)
 
-        if t.source_vertex['b'] == 1 and 'V1' in get_lg_vars(__name__, t, variables):
+        if t.source_vertex['b'] in (1, 2) and 'V1' in get_lg_vars(__name__, t, variables):
             l2.add(t.index)
             src_l2.add(t.source)
             target_l2.add(t.target)
